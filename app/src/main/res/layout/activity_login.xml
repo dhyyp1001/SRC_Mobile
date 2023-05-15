@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical"
+    android:paddingLeft="15dp"
+    android:paddingTop="70dp"
+    android:paddingRight="15dp"
+    >
+
+    <!--<TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:gravity="right"
+        android:text="SRC Mobile"
+        android:textColor="#AD3693DA"
+        android:textFontWeight="1000"
+        android:textSize="30sp"
+        />-->
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="119dp"
+        android:src="@drawable/login_banner_01"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <!--android:background="@drawable/layout_background"-->
+
+        <EditText
+            android:id="@+id/login_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="아이디"
+            android:inputType="textEmailAddress"
+            android:minHeight="48dp"
+            android:textSize="35px"
+
+            />
+
+        <EditText
+            android:id="@+id/login_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:ems="10"
+            android:hint="비밀번호"
+            android:inputType="textPassword"
+            android:minHeight="48dp"
+            android:textSize="35px"
+            />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/login_button"
+        android:layout_width="match_parent"
+        android:layout_height="59dp"
+        android:backgroundTint="#2F80C1"
+        android:padding="10dp"
+        android:textSize="35px"
+        android:text="로그인"
+        android:textColor="#FFFEFE"
+        />
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="366dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="새로운 계정 생성은 문의 바랍니다."
+            android:textSize="30px"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints"
+            />
+    </android.support.constraint.ConstraintLayout>
+
+</LinearLayout>
