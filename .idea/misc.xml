@@ -5,11 +5,13 @@
       <map>
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.451" />
         <entry key="app/src/main/res/font/audiowide.xml" value="0.49635416666666665" />
+        <entry key="app/src/main/res/layout/activity_dialog.xml" value="0.5140625" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.46510416666666665" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.4661458333333333" />
         <entry key="app/src/main/res/layout/activity_site_list.xml" value="0.4661458333333333" />
         <entry key="app/src/main/res/layout/activity_src_end.xml" value="0.46510416666666665" />
         <entry key="app/src/main/res/layout/adapter_site_list.xml" value="0.46510416666666665" />
+        <entry key="app/src/main/res/layout/dialog_loading.xml" value="0.2869791666666667" />
       </map>
     </option>
   </component>

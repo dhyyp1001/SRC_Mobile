@@ -1,4 +1,4 @@
-package com.auto.src_mobile.network_object;
+package com.auto.src_mobile.network_side;
 
 public class CamInfo {
     private String sName;
