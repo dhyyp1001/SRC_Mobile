@@ -6,4 +6,5 @@ public class UrlList {
     public String controllerWebPageUrl(){ return "http://192.168.0.2:8080/java_onvif_web/";}
     public String modbusConnectionUrl(){ return "http://192.168.0.2:8080/java_onvif_web/ModbusConnection";}
     public String networkUserConnectionUrl(){ return "http://192.168.0.2:8080/userCon";}
+    public String networkOnvifControllerUrl(){ return "http://192.168.0.2:8080/onvifCont";}
 }

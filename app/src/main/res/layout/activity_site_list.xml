@@ -11,31 +11,36 @@
         android:layout_width="match_parent"
         android:layout_height="?android:actionBarSize"
         android:background="#A7ACAC"
-        android:titleTextColor="#FFFFFF">
+        android:titleTextColor="#FFFFFF"
+        android:shadowColor="@color/black"
+        android:shadowDx="2.0"
+        android:shadowDy="2.0"
+        android:shadowRadius="7.0"
+        >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
-            android:text="SRC mobile "
-            android:textColor="#DCE9F6"
-            android:textSize="25dp"
-            android:shadowRadius="7.0"
+            android:shadowColor="@color/black"
             android:shadowDx="2.0"
             android:shadowDy="2.0"
-            android:shadowColor="@color/black"
+            android:shadowRadius="7.0"
+            android:text="SRC mobile "
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
             />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
-            android:text=" 염수살포장치 원격화 시스템 제어"
-            android:textSize="10dp"
-            android:shadowRadius="1.0"
+            android:shadowColor="#525257"
             android:shadowDx="1.0"
             android:shadowDy="1.0"
-            android:shadowColor="#525257"
+            android:shadowRadius="1.0"
+            android:text=" 염수살포장치 원격화 시스템 제어"
+            android:textSize="10dp"
             />
     </Toolbar>
 
@@ -48,12 +53,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:background="#DCE9F6"
+        android:textSize="9dp"
+
         />
 
     <ListView
         android:id="@+id/list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:shadowColor="@color/black"
+        android:shadowDx="2.0"
+        android:shadowDy="2.0"
+        android:shadowRadius="7.0"
         />
 
 </LinearLayout>

@@ -3,7 +3,9 @@ package com.auto.src_mobile.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.widget.ListView;
 
 import com.auto.src_mobile.R;
@@ -21,6 +23,7 @@ public class SiteListActivity extends AppCompatActivity {
     SiteListAdapter adapter;
     ListView listView;
     Long mLastClickTime = 0L;
+    static CamInfo camInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +34,8 @@ public class SiteListActivity extends AppCompatActivity {
         camInfoList = new ArrayList<>();
 
         Gson gson = new Gson();
-        camInfoList = gson.fromJson(NetworkUserConnection.listValues, new TypeToken<ArrayList<CamInfo>>(){}.getType());
+        camInfoList = gson.fromJson(NetworkUserConnection.listValues, new TypeToken<ArrayList<CamInfo>>() {
+        }.getType());
 
         adapter = new SiteListAdapter(this, camInfoList);
         listView.setAdapter(adapter);
@@ -44,6 +48,8 @@ public class SiteListActivity extends AppCompatActivity {
                 Intent intent = new Intent(SiteListActivity.this, SRCEndActivity.class);
                 intent.putExtra("mediaUri", selectedData.getMediaUri());
                 intent.putExtra("modIP", selectedData.getModIP());
+                intent.putExtra("sName", selectedData.getsName());
+                camInfo = new CamInfo(selectedData.getsName(), selectedData.getCamIP(), selectedData.getCamRtsp(), selectedData.getCamHttp(), selectedData.getModIP(), selectedData.getModPort(), selectedData.getCamId(), selectedData.getCamPwd(), selectedData.getMediaUri(), selectedData.getOwner(), selectedData.getManager(), selectedData.getOperator());
 
                 startActivity(intent);
             }

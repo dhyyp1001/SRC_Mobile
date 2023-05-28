@@ -20,15 +20,15 @@ public class LoginActivity extends Activity {
         final EditText editId = (EditText) findViewById(R.id.login_id);
         final EditText  editPassword = (EditText) findViewById(R.id.login_password);
 
-        Button button = (Button) findViewById(R.id.login_button);
+        Button loginButton = (Button) findViewById(R.id.login_button);
 
-        button.setOnClickListener(new View.OnClickListener() {
+        loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new Thread(){
                     public void run(){
-                        NetworkUserConnection nc = new NetworkUserConnection(editId.getText().toString(), editPassword.getText().toString());
-                        if(nc.okSign.equals("ok")) {
+                        NetworkUserConnection nuc = new NetworkUserConnection(editId.getText().toString(), editPassword.getText().toString());
+                        if(nuc.okSign.equals("ok")) {
                             Intent intent = new Intent(getApplicationContext(), SiteListActivity.class);
                             startActivity(intent);
                         }

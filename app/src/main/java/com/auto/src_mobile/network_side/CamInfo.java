@@ -15,6 +15,9 @@ public class CamInfo {
     private String manager;
     private String operator;
 
+    public CamInfo() {
+    }
+
     public CamInfo(String sName, String camIP, String camRtsp, String camHttp, String modIP, String modPort, String camId, String camPwd, String mediaUri, String owner, String manager, String operator) {
         this.sName = sName;
         this.camIP = camIP;

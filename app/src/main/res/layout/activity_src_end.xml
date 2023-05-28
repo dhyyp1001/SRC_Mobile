@@ -1,12 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#020202"
     android:keepScreenOn="true"
     android:orientation="vertical"
     >
+
+    <Toolbar
+        android:contentInsetStartWithNavigation="0dp"
+        android:contentInsetStart="0dp"
+        android:id="@+id/site_name_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:actionBarSize"
+        android:background="#A7ACAC"
+        android:titleTextColor="#FFFFFF"
+        android:shadowColor="@color/black"
+        android:shadowDx="2.0"
+        android:shadowDy="2.0"
+        android:shadowRadius="7.0"
+        >
+
+        <TextView
+            android:id="@+id/show_site_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:shadowColor="@color/black"
+            android:shadowDx="2.0"
+            android:shadowDy="2.0"
+            android:shadowRadius="7.0"
+            android:text="Site name"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+
+            />
+
+    </Toolbar>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -19,10 +51,90 @@
             android:layout_height="215dp"
             android:fitsSystemWindows="false"
             app:layout_constraintBottom_toBottomOf="parent"
-            >
-
-        </org.videolan.libvlc.util.VLCVideoLayout>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+
+            <ImageButton
+                android:id="@+id/circle_button_top"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="5dp"
+
+                android:background="@drawable/circle1"
+                android:padding="100dp"
+                android:paddingTop="3dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <ImageButton
+                android:id="@+id/circle_button_left"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+
+                android:layout_marginTop="65dp"
+                android:background="@drawable/circle4"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <ImageButton
+                android:id="@+id/circle_button_right"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+
+                android:layout_marginStart="120dp"
+                android:layout_marginTop="65dp"
+                android:background="@drawable/circle2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <ImageButton
+                android:id="@+id/home_button"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+
+                android:layout_marginStart="80dp"
+                android:background="@drawable/home_background"
+                android:padding="10sp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/home"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/circle_button_top"
+                />
+
+            <ImageButton
+                android:id="@+id/circle_button_down"
+                android:layout_width="81dp"
+                android:layout_height="82dp"
+
+                android:layout_marginStart="60dp"
+                android:background="@drawable/circle3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/home_button"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 </LinearLayout>
