@@ -7,16 +7,14 @@ import java.io.DataOutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class NetworkUserConnection {
-    private static final String TAG = "NetworkUserConnection : ";
+public class NetworkModbusRead {
+    private static final String TAG = "NetworkModbusRead : ";
+    public static String[] responseArr;
     public String response = "";
-    public String okSign = "";
-    public static String listValues = "";
 
-    public NetworkUserConnection(String id, String pw) {
+    public NetworkModbusRead(String modIP) {
         try {
-            String[]responseArr;
-            URL url = new URL(new ServerUrl().serverUrl+"userCon");//new UrlList().networkUserConnectionUrl());
+            URL url = new URL(new ServerUrl().serverUrl + "modbusRead");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
             connection.setRequestMethod("POST");
@@ -24,9 +22,7 @@ public class NetworkUserConnection {
             connection.setDoOutput(true);
 
             DataOutputStream dataOutputStream = new DataOutputStream(connection.getOutputStream());
-            dataOutputStream.write(id.getBytes());
-            dataOutputStream.write(" ".getBytes());
-            dataOutputStream.write(pw.getBytes());
+            dataOutputStream.write(modIP.getBytes());
             dataOutputStream.flush();
 
             DataInputStream dataInputStream = new DataInputStream(connection.getInputStream());
@@ -38,14 +34,10 @@ public class NetworkUserConnection {
             dataOutputStream.close();
             dataInputStream.close();
 
-            responseArr = response.split("//////");
-            okSign = responseArr[0];
-            listValues = responseArr[1];//리스트값
-
+            responseArr = response.split("/");
             int responseCode = connection.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 Log.i(TAG, "Login OK");
-                System.out.println(listValues);
             } else {
                 Log.i(TAG, "Login FAIL");
             }

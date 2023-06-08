@@ -11,7 +11,7 @@ public class NetworkOnvifController {
 
     public NetworkOnvifController(String mediaUri, String x, String y, String home) {
         try {
-            URL url = new URL(new UrlList().networkOnvifControllerUrl());
+            URL url = new URL(new ServerUrl().serverUrl+"onvifCont");//new UrlList().networkOnvifControllerUrl());
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
             connection.setRequestMethod("POST");

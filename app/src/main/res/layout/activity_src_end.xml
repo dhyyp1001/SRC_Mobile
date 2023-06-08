@@ -10,17 +10,17 @@
     >
 
     <Toolbar
-        android:contentInsetStartWithNavigation="0dp"
-        android:contentInsetStart="0dp"
         android:id="@+id/site_name_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?android:actionBarSize"
         android:background="#A7ACAC"
-        android:titleTextColor="#FFFFFF"
+        android:contentInsetStart="0dp"
+        android:contentInsetStartWithNavigation="0dp"
         android:shadowColor="@color/black"
         android:shadowDx="2.0"
         android:shadowDy="2.0"
         android:shadowRadius="7.0"
+        android:titleTextColor="#FFFFFF"
         >
 
         <TextView
@@ -42,20 +42,18 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="477dp"
+        android:layout_height="401dp"
         >
 
         <org.videolan.libvlc.util.VLCVideoLayout
             android:id="@+id/video_layout"
             android:layout_width="match_parent"
-            android:layout_height="215dp"
+            android:layout_height="250dp"
             android:fitsSystemWindows="false"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -66,75 +64,294 @@
         android:orientation="horizontal"
         >
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             >
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="209dp"
+                android:layout_height="match_parent"
+                >
 
-            <ImageButton
-                android:id="@+id/circle_button_top"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_marginStart="60dp"
-                android:layout_marginTop="5dp"
 
-                android:background="@drawable/circle1"
-                android:padding="100dp"
-                android:paddingTop="3dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                <ImageButton
+                    android:id="@+id/circle_button_top"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="60dp"
+                    android:layout_marginTop="5dp"
+
+                    android:background="@drawable/circle1"
+                    android:padding="100dp"
+                    android:paddingTop="3dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+
+                <ImageButton
+                    android:id="@+id/circle_button_left"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+
+                    android:layout_marginTop="65dp"
+                    android:background="@drawable/circle4"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+
+                <ImageButton
+                    android:id="@+id/circle_button_right"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+
+                    android:layout_marginStart="120dp"
+                    android:layout_marginTop="65dp"
+                    android:background="@drawable/circle2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+
+                <ImageButton
+                    android:id="@+id/home_button"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+
+                    android:layout_marginStart="80dp"
+                    android:background="@drawable/home_background"
+                    android:padding="10sp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/home"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/circle_button_top"
+                    />
+
+                <ImageButton
+                    android:id="@+id/circle_button_down"
+                    android:layout_width="81dp"
+                    android:layout_height="82dp"
+
+                    android:layout_marginStart="60dp"
+                    android:background="@drawable/circle3"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/home_button"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <Button
+                android:id="@+id/spray_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/round_button"
+                android:text="살포 시작"
                 />
 
-            <ImageButton
-                android:id="@+id/circle_button_left"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+        </LinearLayout>
 
-                android:layout_marginTop="65dp"
-                android:background="@drawable/circle4"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
 
-            <ImageButton
-                android:id="@+id/circle_button_right"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="215dp"
+                android:orientation="horizontal"
+                >
 
-                android:layout_marginStart="120dp"
-                android:layout_marginTop="65dp"
-                android:background="@drawable/circle2"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
 
-            <ImageButton
-                android:id="@+id/home_button"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="4dp"
+                        android:text="A 탱크"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        />
 
-                android:layout_marginStart="80dp"
-                android:background="@drawable/home_background"
-                android:padding="10sp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/home"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/circle_button_top"
-                />
+                    <TextView
+                        android:id="@+id/tank_a_text_status"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="4dp"
+                        android:text="-"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        />
 
-            <ImageButton
-                android:id="@+id/circle_button_down"
-                android:layout_width="81dp"
-                android:layout_height="82dp"
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        >
 
-                android:layout_marginStart="60dp"
-                android:background="@drawable/circle3"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/home_button"
-                />
+                        <ImageView
+                            android:layout_width="70dp"
+                            android:layout_height="170dp"
+                            android:layout_marginLeft="10dp"
+                            android:src="@drawable/tank"
+                            />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                        <View
+                            android:id="@+id/tank_a_bar_status"
+                            android:layout_width="35dp"
+                            android:layout_height="85dp"
+                            android:layout_marginLeft="35dp"
+                            android:layout_marginTop="34dp"
+                            android:background="#5EA4DC"
+                            />
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="4dp"
+                        android:text="B 탱크"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        />
+
+                    <TextView
+                        android:id="@+id/tank_b_text_status"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="4dp"
+                        android:text="-"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        />
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        >
+
+                        <ImageView
+                            android:layout_width="70dp"
+                            android:layout_height="170dp"
+                            android:layout_marginLeft="10dp"
+                            android:src="@drawable/tank"
+                            />
+
+                        <View
+                            android:id="@+id/tank_b_bar_status"
+                            android:layout_width="35dp"
+                            android:layout_height="85dp"
+                            android:layout_marginLeft="35dp"
+                            android:layout_marginTop="34dp"
+                            android:background="#5EA4DC"
+                            />
+
+                    </RelativeLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:background="#000000"
+                android:stretchColumns="*"
+                >
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="17dp"
+                    android:layout_margin="3dp"
+                    android:background="#37373A"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="상태 종류"
+                        android:textColor="@color/white"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="값"
+                        android:textColor="@color/white"
+                        />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_margin="3dp"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="절기"
+                        android:textColor="@color/white"
+                        />
+
+                    <TextView
+                        android:id="@+id/season_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="-"
+                        android:textColor="@color/white"
+                        />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_margin="3dp"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="동작 상태"
+                        android:textColor="@color/white"
+                        />
+
+                    <TextView
+                        android:id="@+id/main_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="-"
+                        android:textColor="@color/white"
+                        />
+                </TableRow>
+            </TableLayout>
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>

@@ -50,7 +50,6 @@ public class SiteListActivity extends AppCompatActivity {
                 intent.putExtra("modIP", selectedData.getModIP());
                 intent.putExtra("sName", selectedData.getsName());
                 camInfo = new CamInfo(selectedData.getsName(), selectedData.getCamIP(), selectedData.getCamRtsp(), selectedData.getCamHttp(), selectedData.getModIP(), selectedData.getModPort(), selectedData.getCamId(), selectedData.getCamPwd(), selectedData.getMediaUri(), selectedData.getOwner(), selectedData.getManager(), selectedData.getOperator());
-
                 startActivity(intent);
             }
             mLastClickTime = SystemClock.elapsedRealtime();
