@@ -10,5 +10,6 @@
         <!-- Customize your theme here. -->
         <item name="windowNoTitle">true</item>
         <item name="colorControlNormal">#686A6A</item> <!--홈/뒤로가기 버튼의 색상-->
+        <item name="android:windowSplashScreenAnimatedIcon" tools:targetApi="s">@drawable/splash_img</item>
     </style>
 </resources>

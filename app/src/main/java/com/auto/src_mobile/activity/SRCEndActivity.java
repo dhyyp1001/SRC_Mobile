@@ -1,13 +1,22 @@
 package com.auto.src_mobile.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.os.StrictMode;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.auto.src_mobile.R;
@@ -20,6 +29,8 @@ import org.videolan.libvlc.MediaPlayer;
 import org.videolan.libvlc.util.VLCVideoLayout;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class SRCEndActivity extends Activity {
     private Uri mediaUri;//파일 재생 위치 : String, Uri, FileDescriptor, AssetFileDescriptor 지원 함
@@ -28,35 +39,13 @@ public class SRCEndActivity extends Activity {
     private VLCVideoLayout mVideoLayout = null;// 비디오 레이아웃
     private LibVLC mLibVLC = null;// LibVLC 클래스
     private MediaPlayer mMediaPlayer = null;// 미디어 컨트롤러
-
-    private View statusBarA;
-    private View statusBarB;
-    private int maxValue = 100; // 최대 수치 값
-    private int currentValueA = 0; // 첫 번째 바의 현재 수치 값
-    private int currentValueB = 0; // 두 번째 바의 현재 수치 값
+    int focusingCount = 0;
+    int toastCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_src_end);
-
-        // 스테이터스 바 가져오기
-        statusBarA = findViewById(R.id.tank_a_bar_status);
-        statusBarB = findViewById(R.id.tank_b_bar_status);
-
-        // 스테이터스 바를 ImageView 위에 덮기
-        statusBarA.bringToFront();
-        statusBarB.bringToFront();
-
-        // 첫 번째 바 초기화
-        int statusBarHeight = statusBarA.getHeight();
-        int progressA = (currentValueA * statusBarHeight) / maxValue;
-        statusBarA.setTranslationY(progressA);
-
-        // 두 번째 바 초기화
-        int statusBarHeight2 = statusBarB.getHeight();
-        int progressB = (currentValueB * statusBarHeight2) / maxValue;
-        statusBarB.setTranslationY(progressB);
 
         // toolbar 뒤로가기
         Toolbar toolbar = findViewById(R.id.site_name_toolbar);
@@ -76,7 +65,7 @@ public class SRCEndActivity extends Activity {
         TextView site_name_textView = findViewById(R.id.show_site_name);
         site_name_textView.setText(intent.getStringExtra("sName"));//사이트 명 수신
 
-        // 버튼 영역
+        // 방향키 버튼 영역
         ImageButton topButton = findViewById(R.id.circle_button_top);
         topButton.setOnClickListener(view -> new Thread(() -> new NetworkOnvifController(SiteListActivity.camInfo.getMediaUri(), "0", "-0.1", "no")).start());
 
@@ -92,24 +81,10 @@ public class SRCEndActivity extends Activity {
         ImageButton homeButton = findViewById(R.id.home_button);
         homeButton.setOnClickListener(view -> new Thread(() -> new NetworkOnvifController(SiteListActivity.camInfo.getMediaUri(), "0", "0", "yes")).start());
 
-        //modbus 영역
-        NetworkModbusRead nmr = new NetworkModbusRead(SiteListActivity.camInfo.getModIP());
-        String[] arr = nmr.responseArr;
-        String tankA = arr[0];
-        String tankB = arr[1];
-        String sprayStatus = arr[2];
-        String season = arr[3];
+        // 살포 버튼 영역
+        ImageButton startButton = findViewById(R.id.spray_button);
+        startButton.setOnClickListener(view -> new Thread(() -> new NetworkOnvifController(SiteListActivity.camInfo.getMediaUri(), "0", "0", "yes")).start());
 
-        TextView tank_a_text_status_textView = findViewById(R.id.tank_a_text_status);
-        TextView tank_b_text_status_textView = findViewById(R.id.tank_a_text_status);
-        TextView season_status_textView = findViewById(R.id.season_status);
-        TextView main_status_textView = findViewById(R.id.main_status);
-        tank_a_text_status_textView.setText(tankA);
-        tank_b_text_status_textView.setText(tankB);
-        main_status_textView.setText(sprayStatus);
-        season_status_textView.setText(season);
-        updateValueA(Integer.valueOf(tankA));
-        updateValueA(Integer.valueOf(tankB));
     }
 
     @Override
@@ -122,6 +97,7 @@ public class SRCEndActivity extends Activity {
         mMediaPlayer.setMedia(media);// 미디어 컨트롤러 클래스에 미디어 적용
         media.release();
         mMediaPlayer.play();// 재생 시작
+
     }
 
     @Override
@@ -129,6 +105,7 @@ public class SRCEndActivity extends Activity {
         super.onDestroy();
         mMediaPlayer.release();// 미디어 컨트롤러 제거
         mLibVLC.release();// VLC 제거
+        timer.cancel();
     }
 
     @Override
@@ -148,19 +125,78 @@ public class SRCEndActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    // 첫 번째 바 수치 업데이트 메서드
-    private void updateValueA(int newValue) {
-        currentValueA = newValue;
-        int statusBarHeightA = statusBarA.getHeight();
-        int progressA = (currentValueA * statusBarHeightA) / maxValue;
-        statusBarA.setTranslationY(progressA);
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+
+        if (focusingCount == 0) {
+            //스레드 정책
+            int SDK_INT = android.os.Build.VERSION.SDK_INT;
+            if (SDK_INT > 8) {
+                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                        .permitAll().build();
+                StrictMode.setThreadPolicy(policy);
+                try {
+                    timer.schedule(timerTask, 0, 5000);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            focusingCount++;
+        } else if (focusingCount == 1) {
+            focusingCount--;
+        }
     }
 
-    // 두 번째 바 수치 업데이트 메서드
-    private void updateValueB(int newValue) {
-        currentValueB = newValue;
-        int statusBarHeightB = statusBarB.getHeight();
-        int progressB = (currentValueB * statusBarHeightB) / maxValue;
-        statusBarB.setTranslationY(progressB);
-    }
+    @SuppressLint("HandlerLeak")
+    final Handler handler = new Handler() {
+        //메인 쓰레드 실행 위해 핸들러 사용
+        public void handleMessage(Message msg) {
+
+            NetworkModbusRead nmr = new NetworkModbusRead(SiteListActivity.camInfo.getModIP());
+
+            String[] arr = nmr.responseArr;
+            if (nmr.responseArr.length <= 1) {
+                timer.cancel();
+                timerTask.cancel();
+                if (toastCount == 0) {
+                    Toast.makeText(getBaseContext(), "모드버스 서버와 연결이 불가 합니다. \n관리자에게 문의 바랍니다.", Toast.LENGTH_LONG).show();
+                    toastCount++;
+                } else {
+                    toastCount--;
+                }
+            } else {
+                String tankA = arr[0];
+                String tankB = arr[1];
+                String sprayStatus = arr[2];
+                String season = arr[3];
+
+                TextView tank_a_text_status_textView = findViewById(R.id.tank_a_text_status);
+                TextView tank_b_text_status_textView = findViewById(R.id.tank_b_text_status);
+                TextView season_status_textView = findViewById(R.id.season_status);
+                TextView main_status_textView = findViewById(R.id.main_status);
+                tank_a_text_status_textView.setText(tankA + " %");
+                tank_b_text_status_textView.setText(tankB + " %");
+                main_status_textView.setText(sprayStatus);
+                season_status_textView.setText(season);
+                ProgressBar pgbA = findViewById(R.id.tank_a_bar_status);
+                ProgressBar pgbB = findViewById(R.id.tank_b_bar_status);
+                pgbA.setProgress(Integer.valueOf(tankA));
+                pgbB.setProgress(Integer.valueOf(tankB));
+            }
+        }
+    };
+
+    Timer timer = new Timer(true);
+    TimerTask timerTask = new TimerTask() {
+        @Override
+        public void run() {
+            Message msg = handler.obtainMessage();
+            handler.sendMessage(msg);
+        }
+
+        @Override
+        public boolean cancel() {
+            return super.cancel();
+        }
+    };
 }

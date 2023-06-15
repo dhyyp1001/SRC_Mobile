@@ -146,7 +146,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/round_button"
                 android:text="살포 시작"
                 />
@@ -160,12 +160,16 @@
             >
 
             <LinearLayout
+
                 android:layout_width="match_parent"
-                android:layout_height="215dp"
+                android:layout_height="190dp"
                 android:orientation="horizontal"
                 >
 
                 <LinearLayout
+                    android:layout_marginTop="15dp"
+
+                    android:layout_weight="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -175,7 +179,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="4dp"
+                        android:layout_marginLeft="1dp"
                         android:text="A 탱크"
                         android:textAlignment="center"
                         android:textColor="@color/white"
@@ -186,31 +190,35 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="4dp"
+                        android:layout_marginLeft="1dp"
                         android:text="-"
                         android:textAlignment="center"
                         android:textColor="@color/white"
                         />
 
                     <RelativeLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         >
 
                         <ImageView
                             android:layout_width="70dp"
-                            android:layout_height="170dp"
-                            android:layout_marginLeft="10dp"
+                            android:layout_height="120dp"
+                            android:layout_marginLeft="9dp"
                             android:src="@drawable/tank"
                             />
 
-                        <View
+                        <ProgressBar
                             android:id="@+id/tank_a_bar_status"
-                            android:layout_width="35dp"
-                            android:layout_height="85dp"
-                            android:layout_marginLeft="35dp"
-                            android:layout_marginTop="34dp"
-                            android:background="#5EA4DC"
+                            style="@android:style/Widget.ProgressBar.Horizontal"
+                            android:layout_width="60dp"
+                            android:layout_height="30dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="39dp"
+                            android:max="100"
+                            android:progress="0"
+                            android:progressTint="#5EA4DC"
+                            android:rotation="270"
                             />
                     </RelativeLayout>
 
@@ -218,16 +226,18 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:layout_weight="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:layout_marginTop="15dp"
                     >
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="4dp"
+                        android:layout_marginLeft="1dp"
                         android:text="B 탱크"
                         android:textAlignment="center"
                         android:textColor="@color/white"
@@ -238,31 +248,35 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="4dp"
+                        android:layout_marginLeft="2dp"
                         android:text="-"
                         android:textAlignment="center"
                         android:textColor="@color/white"
                         />
 
                     <RelativeLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         >
 
                         <ImageView
                             android:layout_width="70dp"
-                            android:layout_height="170dp"
-                            android:layout_marginLeft="10dp"
+                            android:layout_height="120dp"
+                            android:layout_marginLeft="5dp"
                             android:src="@drawable/tank"
                             />
 
-                        <View
+                        <ProgressBar
                             android:id="@+id/tank_b_bar_status"
-                            android:layout_width="35dp"
-                            android:layout_height="85dp"
-                            android:layout_marginLeft="35dp"
-                            android:layout_marginTop="34dp"
-                            android:background="#5EA4DC"
+                            style="@android:style/Widget.ProgressBar.Horizontal"
+                            android:layout_width="60dp"
+                            android:layout_height="30dp"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginTop="39dp"
+                            android:max="100"
+                            android:progress="0"
+                            android:progressTint="#5EA4DC"
+                            android:rotation="270"
                             />
 
                     </RelativeLayout>
@@ -307,13 +321,22 @@
                     android:layout_margin="3dp"
                     >
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="절기"
-                        android:textColor="@color/white"
-                        />
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:background="#636363">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="절기"
+                            android:textColor="@color/white"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            tools:ignore="MissingConstraints"
+                            android:textAlignment="center"
+                            android:gravity="center"
+                            />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                     <TextView
                         android:id="@+id/season_status"
@@ -331,13 +354,21 @@
                     android:layout_margin="3dp"
                     >
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="동작 상태"
-                        android:textColor="@color/white"
-                        />
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:background="#636363">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="동작 상태"
+                            android:textColor="@color/white"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            tools:ignore="MissingConstraints"
+                            android:textAlignment="center"
+                            android:gravity="center"
+                            />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <TextView
                         android:id="@+id/main_status"
