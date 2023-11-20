@@ -45,7 +45,7 @@ public class NetworkUserConnection {
             int responseCode = connection.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 Log.i(TAG, "Login OK");
-                System.out.println(listValues);
+                //System.out.println(listValues);
             } else {
                 Log.i(TAG, "Login FAIL");
             }

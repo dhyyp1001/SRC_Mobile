@@ -11,8 +11,7 @@ import java.net.SocketTimeoutException;
 import java.net.URL;
 
 public class NetworkModbusWrite {
-    private static final String TAG = "NetworkModbusRead : ";
-    public static String[] responseArr;
+    private static final String TAG = "NetworkModbusWrite : ";
 
     public NetworkModbusWrite(String modIP, String stopStartBit) {
         try {

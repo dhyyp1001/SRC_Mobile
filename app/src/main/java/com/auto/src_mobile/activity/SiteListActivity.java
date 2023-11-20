@@ -34,8 +34,7 @@ public class SiteListActivity extends AppCompatActivity {
         camInfoList = new ArrayList<>();
 
         Gson gson = new Gson();
-        camInfoList = gson.fromJson(NetworkUserConnection.listValues, new TypeToken<ArrayList<CamInfo>>() {
-        }.getType());
+        camInfoList = gson.fromJson(NetworkUserConnection.listValues, new TypeToken<ArrayList<CamInfo>>() {}.getType());
 
         adapter = new SiteListAdapter(this, camInfoList);
         listView.setAdapter(adapter);
@@ -49,7 +48,10 @@ public class SiteListActivity extends AppCompatActivity {
                 intent.putExtra("mediaUri", selectedData.getMediaUri());
                 intent.putExtra("modIP", selectedData.getModIP());
                 intent.putExtra("sName", selectedData.getsName());
-                camInfo = new CamInfo(selectedData.getsName(), selectedData.getCamIP(), selectedData.getCamRtsp(), selectedData.getCamHttp(), selectedData.getModIP(), selectedData.getModPort(), selectedData.getCamId(), selectedData.getCamPwd(), selectedData.getMediaUri(), selectedData.getOwner(), selectedData.getManager(), selectedData.getOperator());
+                camInfo = new CamInfo(selectedData.getsName(), selectedData.getCamIP(), selectedData.getCamRtsp(),
+                        selectedData.getCamHttp(), selectedData.getModIP(), selectedData.getModPort(),
+                        selectedData.getCamId(), selectedData.getCamPwd(), selectedData.getMediaUri(),
+                        selectedData.getOwner(), selectedData.getManager(), selectedData.getOperator());
                 startActivity(intent);
             }
             mLastClickTime = SystemClock.elapsedRealtime();

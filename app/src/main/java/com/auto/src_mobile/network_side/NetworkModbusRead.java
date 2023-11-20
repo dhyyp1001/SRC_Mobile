@@ -21,7 +21,7 @@ public class NetworkModbusRead {
             URL url = new URL(new ServerUrl().serverUrl + "modbusRead");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
-            connection.setConnectTimeout(5000);
+            connection.setConnectTimeout(99999);
             connection.setRequestMethod("POST");
             connection.setDoInput(true);
             connection.setDoOutput(true);

@@ -13,6 +13,7 @@ import android.os.StrictMode;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -21,6 +22,7 @@ import android.widget.Toolbar;
 
 import com.auto.src_mobile.R;
 import com.auto.src_mobile.network_side.NetworkModbusRead;
+import com.auto.src_mobile.network_side.NetworkModbusWrite;
 import com.auto.src_mobile.network_side.NetworkOnvifController;
 
 import org.videolan.libvlc.LibVLC;
@@ -39,9 +41,12 @@ public class SRCEndActivity extends Activity {
     private VLCVideoLayout mVideoLayout = null;// 비디오 레이아웃
     private LibVLC mLibVLC = null;// LibVLC 클래스
     private MediaPlayer mMediaPlayer = null;// 미디어 컨트롤러
-    int focusingCount = 0;
-    int toastCount = 0;
+    private NetworkModbusRead nmr;
+    Button startButton;
+    Button stopIngButton;
+    Button stopButton;
 
+    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,9 +87,16 @@ public class SRCEndActivity extends Activity {
         homeButton.setOnClickListener(view -> new Thread(() -> new NetworkOnvifController(SiteListActivity.camInfo.getMediaUri(), "0", "0", "yes")).start());
 
         // 살포 버튼 영역
-        ImageButton startButton = findViewById(R.id.spray_button);
-        startButton.setOnClickListener(view -> new Thread(() -> new NetworkOnvifController(SiteListActivity.camInfo.getMediaUri(), "0", "0", "yes")).start());
+        startButton = findViewById(R.id.spray_button);
+        startButton.setOnClickListener(view -> new Thread(() -> new NetworkModbusWrite(SiteListActivity.camInfo.getModIP(), "0")).start());
 
+        stopIngButton = findViewById(R.id.stopIng_button);
+
+        stopButton = findViewById(R.id.stop_button);
+        stopButton.setOnClickListener(view -> new Thread(() -> new NetworkModbusWrite(SiteListActivity.camInfo.getModIP(), "1")).start());
+
+        stopIngButton.setVisibility(View.GONE);
+        stopButton.setVisibility(View.GONE);
     }
 
     @Override
@@ -97,7 +109,6 @@ public class SRCEndActivity extends Activity {
         mMediaPlayer.setMedia(media);// 미디어 컨트롤러 클래스에 미디어 적용
         media.release();
         mMediaPlayer.play();// 재생 시작
-
     }
 
     @Override
@@ -105,7 +116,6 @@ public class SRCEndActivity extends Activity {
         super.onDestroy();
         mMediaPlayer.release();// 미디어 컨트롤러 제거
         mLibVLC.release();// VLC 제거
-        timer.cancel();
     }
 
     @Override
@@ -113,6 +123,7 @@ public class SRCEndActivity extends Activity {
         super.onStop();
         mMediaPlayer.stop();// 재생 중지
         mMediaPlayer.detachViews();// 연결된 View 제거
+        timer.cancel();
     }
 
     @Override
@@ -127,23 +138,16 @@ public class SRCEndActivity extends Activity {
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
-
-        if (focusingCount == 0) {
-            //스레드 정책
-            int SDK_INT = android.os.Build.VERSION.SDK_INT;
-            if (SDK_INT > 8) {
-                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
-                        .permitAll().build();
-                StrictMode.setThreadPolicy(policy);
-                try {
-                    timer.schedule(timerTask, 0, 5000);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        //스레드 정책
+        int SDK_INT = android.os.Build.VERSION.SDK_INT;
+        if (SDK_INT > 8) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            try {
+                timer.schedule(timerTask, 0, 5000);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            focusingCount++;
-        } else if (focusingCount == 1) {
-            focusingCount--;
         }
     }
 
@@ -151,24 +155,19 @@ public class SRCEndActivity extends Activity {
     final Handler handler = new Handler() {
         //메인 쓰레드 실행 위해 핸들러 사용
         public void handleMessage(Message msg) {
+            nmr = new NetworkModbusRead(SiteListActivity.camInfo.getModIP());
 
-            NetworkModbusRead nmr = new NetworkModbusRead(SiteListActivity.camInfo.getModIP());
-
-            String[] arr = nmr.responseArr;
-            if (nmr.responseArr.length <= 1) {
+            if (nmr.responseArr[0].equals("SocketTimeoutException.")) {
+                Toast.makeText(getBaseContext(), "모드버스 서버와 연결이 불가 합니다. \n관리자에게 문의 바랍니다.", Toast.LENGTH_LONG).show();
                 timer.cancel();
-                timerTask.cancel();
-                if (toastCount == 0) {
-                    Toast.makeText(getBaseContext(), "모드버스 서버와 연결이 불가 합니다. \n관리자에게 문의 바랍니다.", Toast.LENGTH_LONG).show();
-                    toastCount++;
-                } else {
-                    toastCount--;
-                }
-            } else {
-                String tankA = arr[0];
-                String tankB = arr[1];
-                String sprayStatus = arr[2];
-                String season = arr[3];
+            }else if(nmr.responseArr[0].equals("")){
+                Toast.makeText(getBaseContext(), "모드버스 서버와 연결이 불가 합니다. \n관리자에게 문의 바랍니다.", Toast.LENGTH_LONG+2).show();
+                timer.cancel();
+            }else{
+                String tankA = nmr.responseArr[0];
+                String tankB = nmr.responseArr[1];
+                String sprayStatus = nmr.responseArr[2];
+                String season = nmr.responseArr[3];
 
                 TextView tank_a_text_status_textView = findViewById(R.id.tank_a_text_status);
                 TextView tank_b_text_status_textView = findViewById(R.id.tank_b_text_status);
@@ -182,6 +181,21 @@ public class SRCEndActivity extends Activity {
                 ProgressBar pgbB = findViewById(R.id.tank_b_bar_status);
                 pgbA.setProgress(Integer.valueOf(tankA));
                 pgbB.setProgress(Integer.valueOf(tankB));
+
+                //버튼 영역
+                if (sprayStatus.equals("동작 대기")) {
+                    startButton.setVisibility(View.VISIBLE);
+                    stopIngButton.setVisibility(View.GONE);
+                    stopButton.setVisibility(View.GONE);
+                } else if (sprayStatus.equals("정지 중")) {
+                    startButton.setVisibility(View.GONE);
+                    stopIngButton.setVisibility(View.VISIBLE);
+                    stopButton.setVisibility(View.GONE);
+                } else if (sprayStatus.equals("분사 중")) {
+                    startButton.setVisibility(View.GONE);
+                    stopIngButton.setVisibility(View.GONE);
+                    stopButton.setVisibility(View.VISIBLE);
+                }
             }
         }
     };
@@ -193,10 +207,6 @@ public class SRCEndActivity extends Activity {
             Message msg = handler.obtainMessage();
             handler.sendMessage(msg);
         }
-
-        @Override
-        public boolean cancel() {
-            return super.cancel();
-        }
     };
 }
+
